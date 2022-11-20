@@ -9,7 +9,7 @@ export default function Map() {
 
   return (
     <div className="flex justify-center w-full">
-      <div className="flex flex-col w-full max-w-6xl p-4 space-y-10">
+      <div className="flex flex-col w-full max-w-7xl p-4 space-y-10">
         <section>
           <h1 className="font-bold text-3xl">
             Job Trends During Volatile Times
@@ -32,11 +32,6 @@ export default function Map() {
           <div className="flex flex-col space-y-2">
             <div className="flex flex-row space-x-2">
               <Dropdown
-                value={chart1Settings.yearSettings.value}
-                setValue={chart1Settings.yearSettings.setValue}
-                options={YearOptions}
-              />
-              <Dropdown
                 value={chart1Settings.provinceSettings.value}
                 setValue={chart1Settings.provinceSettings.setValue}
                 options={ProvinceOptions}
@@ -50,11 +45,6 @@ export default function Map() {
               />
             </div>
             <div className="flex flex-row space-x-2">
-              <Dropdown
-                value={chart2Settings.yearSettings.value}
-                setValue={chart2Settings.yearSettings.setValue}
-                options={YearOptions}
-              />
               <Dropdown
                 value={chart2Settings.provinceSettings.value}
                 setValue={chart2Settings.provinceSettings.setValue}
@@ -71,12 +61,12 @@ export default function Map() {
           </div>
         </section>
         <section className="flex flex-row justify-between">
-          <div>
+          <div className="flex flex-row justify-start -mt-48">
             <Canada
               fillColor="#50aaeb"
               onHoverColor="#a1d7ff"
-              height={556}
-              width={496}
+              height={890}
+              width={753}
               onClick={(province: string) => {
                 console.log(province);
               }}

@@ -24,12 +24,10 @@ export interface SettingsContextInterface {
   chart1Settings: {
     provinceSettings: ProvinceSettingsInterface;
     nocSettings: NocSettingsInterface;
-    yearSettings: YearSettingsInterface;
   };
   chart2Settings: {
     provinceSettings: ProvinceSettingsInterface;
     nocSettings: NocSettingsInterface;
-    yearSettings: YearSettingsInterface;
   };
 }
 
@@ -37,39 +35,31 @@ export const SettingsContext = createContext<SettingsContextInterface>({
   mapSettings: {
     nocSettings: {
       value: "",
-      setValue: (value: string) => {},
+      setValue: (_value: string) => {},
     },
     yearSettings: {
       value: "",
-      setValue: (value: string) => {},
+      setValue: (_value: string) => {},
     },
   },
   chart1Settings: {
     provinceSettings: {
       value: "",
-      setValue: (value: string) => {},
+      setValue: (_value: string) => {},
     },
     nocSettings: {
       value: "",
-      setValue: (value: string) => {},
-    },
-    yearSettings: {
-      value: "",
-      setValue: (value: string) => {},
+      setValue: (_value: string) => {},
     },
   },
   chart2Settings: {
     provinceSettings: {
       value: "",
-      setValue: (value: string) => {},
+      setValue: (_value: string) => {},
     },
     nocSettings: {
       value: "",
-      setValue: (value: string) => {},
-    },
-    yearSettings: {
-      value: "",
-      setValue: (value: string) => {},
+      setValue: (_value: string) => {},
     },
   },
 });
@@ -81,13 +71,11 @@ export const SettingsProvider = ({ children }: PropsWithChildren<any>) => {
   const [chart1ProvinceValue, setChart1ProvinceValue] = useState(
     ProvinceOptions[0]
   );
-  const [chart1YearValue, setChart1YearValue] = useState(YearOptions[0]);
   const [chart1NocValue, setChart1NocValue] = useState(NocOptions[0]);
 
   const [chart2ProvinceValue, setChart2ProvinceValue] = useState(
     ProvinceOptions[0]
   );
-  const [chart2YearValue, setChart2YearValue] = useState(YearOptions[0]);
   const [chart2NocValue, setChart2NocValue] = useState(NocOptions[0]);
 
   const provider: SettingsContextInterface = {
@@ -118,12 +106,6 @@ export const SettingsProvider = ({ children }: PropsWithChildren<any>) => {
           setChart1NocValue(value);
         },
       },
-      yearSettings: {
-        value: chart1YearValue,
-        setValue: (value: string) => {
-          setChart1YearValue(value);
-        },
-      },
     },
     chart2Settings: {
       provinceSettings: {
@@ -136,12 +118,6 @@ export const SettingsProvider = ({ children }: PropsWithChildren<any>) => {
         value: chart2NocValue,
         setValue: (value: string) => {
           setChart2NocValue(value);
-        },
-      },
-      yearSettings: {
-        value: chart2YearValue,
-        setValue: (value: string) => {
-          setChart2YearValue(value);
         },
       },
     },
