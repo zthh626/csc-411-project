@@ -1,8 +1,9 @@
-import Canada from "../components/CanadaMap/Canada";
 import Chart from "../components/Chart";
 import { Dropdown } from "../components/Dropdown";
-import { NocOptions, ProvinceOptions, YearOptions } from "../lib/Options";
+import { NocOptions, ProvinceOptions, YearOptions, ProvinceAbbOptions } from "../lib/Options";
 import { useSettingsContext } from "../lib/SettingsContext";
+import CanadaMap from "../components/CanadaMap"
+
 
 export default function Map() {
   const { mapSettings, chart1Settings, chart2Settings } = useSettingsContext();
@@ -37,12 +38,12 @@ export default function Map() {
                 options={ProvinceOptions}
                 size="md"
               />
-              <Dropdown
+              {/* <Dropdown
                 value={chart1Settings.nocSettings.value}
                 setValue={chart1Settings.nocSettings.setValue}
                 options={NocOptions}
                 size="lg"
-              />
+              /> */}
             </div>
             <div className="flex flex-row space-x-2">
               <Dropdown
@@ -51,18 +52,18 @@ export default function Map() {
                 options={ProvinceOptions}
                 size="md"
               />
-              <Dropdown
+              {/* <Dropdown
                 value={chart2Settings.nocSettings.value}
                 setValue={chart2Settings.nocSettings.setValue}
                 options={NocOptions}
                 size="lg"
-              />
+              /> */}
             </div>
           </div>
         </section>
         <section className="flex flex-row justify-between">
           <div className="flex flex-row justify-start -mt-48">
-            <Canada
+            <CanadaMap
               fillColor="#50aaeb"
               onHoverColor="#a1d7ff"
               height={890}
@@ -70,6 +71,9 @@ export default function Map() {
               onClick={(province: string) => {
                 console.log(province);
               }}
+              startYear="2006"
+              endYear="2015"
+              occupation="Management occupations [0]"
             />
           </div>
           <div className="flex flex-col">

@@ -68,6 +68,22 @@ export const ProvinceOptions: string[] = [
   "Yukon",
 ];
 
+export const ProvinceAbbOptions: string[] = [
+  "BC",
+  "AB",
+  "SK",
+  "MB",
+  "ON",
+  "QC",
+  "NB",
+  "NS",
+  "PE",
+  "NL",
+  "YT",
+  "NT",
+  "NU",
+]
+
 export const YearOptions: string[] = [
   "2006",
   "2007",
