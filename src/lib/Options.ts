@@ -10,7 +10,7 @@ export const NocOptions: string[] = [
   "Administrative and financial supervisors and administrative occupations",
   "Finance, insurance and related business administrative occupations",
   "Office support occupations",
-  "Distribution, tracking and scheduling coordination occupations",
+  "Distribution, tracking and scheduling co-ordination occupations",
   "Natural and applied sciences and related occupations",
   "Professional occupations in natural and applied sciences",
   "Technical occupations related to natural and applied sciences",
