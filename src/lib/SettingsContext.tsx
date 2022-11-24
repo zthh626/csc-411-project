@@ -12,14 +12,15 @@ export interface ProvinceSettingsInterface {
 }
 
 export interface YearSettingsInterface {
-  value: string;
-  setValue: (value: string) => void;
+  value: number;
+  setValue: (value: number) => void;
 }
 
 export interface SettingsContextInterface {
   mapSettings: {
     nocSettings: NocSettingsInterface;
-    yearSettings: YearSettingsInterface;
+    yearSettingsStart: YearSettingsInterface;
+    yearSettingsEnd: YearSettingsInterface;
   };
   chart1Settings: {
     provinceSettings: ProvinceSettingsInterface;
@@ -37,9 +38,13 @@ export const SettingsContext = createContext<SettingsContextInterface>({
       value: "",
       setValue: (_value: string) => {},
     },
-    yearSettings: {
-      value: "",
-      setValue: (_value: string) => {},
+    yearSettingsStart: {
+      value: 2006,
+      setValue: (_value: number) => {},
+    },
+    yearSettingsEnd: {
+      value: 2021,
+      setValue: (_value: number) => {},
     },
   },
   chart1Settings: {
@@ -66,7 +71,8 @@ export const SettingsContext = createContext<SettingsContextInterface>({
 
 export const SettingsProvider = ({ children }: PropsWithChildren<any>) => {
   const [mapNocValue, setMapNocValue] = useState(NocOptions[0]);
-  const [mapYearValue, setMapYearValue] = useState(YearOptions[0]);
+  const [mapYearValueStart, setMapYearValueStart] = useState(YearOptions[0]);
+  const [mapYearValueEnd, setMapYearValueEnd] = useState(YearOptions[15]);
 
   const [chart1ProvinceValue, setChart1ProvinceValue] = useState(
     ProvinceOptions[0]
@@ -86,10 +92,16 @@ export const SettingsProvider = ({ children }: PropsWithChildren<any>) => {
           setMapNocValue(value);
         },
       },
-      yearSettings: {
-        value: mapYearValue,
-        setValue: (value: string) => {
-          setMapYearValue(value);
+      yearSettingsStart: {
+        value: mapYearValueStart,
+        setValue: (value: number) => {
+          setMapYearValueStart(value);
+        },
+      },
+      yearSettingsEnd: {
+        value: mapYearValueEnd,
+        setValue: (value: number) => {
+          setMapYearValueEnd(value);
         },
       },
     },
