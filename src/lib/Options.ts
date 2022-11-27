@@ -71,14 +71,11 @@ export type ProvinceOptionType =
   | "Manitoba"
   | "New Brunswick"
   | "Newfoundland and Labrador"
-  | "Northwest Territories"
   | "Nova Scotia"
-  | "Nunavut"
   | "Ontario"
   | "Prince Edward Island"
   | "Quebec"
-  | "Saskatchewan"
-  | "Yukon";
+  | "Saskatchewan";
 
 export const ProvinceAbbOptions: string[] = [
   "BC",

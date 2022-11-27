@@ -61,9 +61,9 @@ const CanadaMap = (props) => {
       NS: { fillColor: colors["Nova Scotia"] },
       PE: { fillColor: colors["Prince Edward Island"] },
       NL: { fillColor: colors["Newfoundland and Labrador"] },
-      YT: { fillColor: colors["Yukon"] },
-      NT: { fillColor: colors["Northwest Territories"] },
-      NU: { fillColor: colors["Nunavut"] },
+      YT: { fillColor: "#BEBEBE" },
+      NT: { fillColor: "#BEBEBE" },
+      NU: { fillColor: "#BEBEBE" },
     };
   }, [endYear, occupation, startYear]);
 
