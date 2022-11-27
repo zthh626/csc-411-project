@@ -82,7 +82,7 @@ export default function Map() {
         </section>
         <section className="flex flex-row justify-between">
           <div className="flex flex-col items-center">
-            <h1 className="text-xl font-semibold -ml-28">
+            <h1 className="text-lg font-semibold -ml-28">
               Percentage Change In Jobs By Province
             </h1>
             <div className="flex flex-col items-center justify-start -mt-20 space-y-10">
@@ -101,8 +101,8 @@ export default function Map() {
             </div>
           </div>
           <div className="flex flex-col items-end space-y-4">
-            <h1 className="self-center text-xl font-semibold">
-              Change in Employment Per Year By Province
+            <h1 className="self-center text-lg font-semibold">
+              Change in Employment Per Year By Province and Occupation
             </h1>
             <Dropdown
               value={chart1Settings.provinceSettings.value}
