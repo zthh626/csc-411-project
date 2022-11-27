@@ -53,6 +53,7 @@ export const NocOptions: string[] = [
 ];
 
 export const ProvinceOptions: string[] = [
+  "Canada",
   "Alberta",
   "British Columbia",
   "Manitoba",

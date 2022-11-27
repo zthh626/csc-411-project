@@ -8,23 +8,45 @@ import {
 } from "../lib/Options";
 import { useSettingsContext } from "../lib/SettingsContext";
 import CanadaMap from "../components/CanadaMap";
-
+import { useEffect, useState } from "react";
+import { PauseCircleIcon, PlayCircleIcon } from "@heroicons/react/24/solid";
 import {
   RangeSlider,
-  RangeSliderTrack,
   RangeSliderFilledTrack,
-  RangeSliderThumb,
   RangeSliderMark,
+  RangeSliderThumb,
+  RangeSliderTrack,
+  useRangeSlider,
 } from "@chakra-ui/react";
 
 export default function Map() {
   const { nocSettings, chart1Settings, chart2Settings, yearSettings } =
     useSettingsContext();
+  const [isAnimationPlaying, setIsAnimationPlaying] = useState(false);
 
   const onYearChange = (value: number[]) => {
     yearSettings.yearSettingsStart.setValue(value[0]);
     yearSettings.yearSettingsEnd.setValue(value[1]);
   };
+
+  useEffect(() => {
+    const updateStartYear = () => {
+      if (!isAnimationPlaying || yearSettings.yearSettingsStart.value > 2017) {
+        setIsAnimationPlaying(false);
+        return;
+      }
+      const yearIndex = YearOptions.findIndex((year) => {
+        return year === yearSettings.yearSettingsStart.value;
+      });
+      yearSettings.yearSettingsStart.setValue(YearOptions[yearIndex + 1]);
+    };
+
+    const animationInterval = setInterval(() => {
+      updateStartYear();
+    }, 750);
+
+    return () => clearInterval(animationInterval);
+  }, [isAnimationPlaying, yearSettings.yearSettingsStart.value]);
 
   return (
     <div className="flex justify-center w-full bg-gray-200">
@@ -34,44 +56,65 @@ export default function Map() {
             Job Trends During Volatile Times
           </h1>
         </section>
-        <section className="flex flex-row justify-between">
-          <div className="flex flex-row items-end space-x-10">
-            <RangeSlider
-              defaultValue={[2006, 2021]}
-              min={2006}
-              max={2021}
-              step={1}
-              width={300}
-              onChange={onYearChange}
-            >
-              <RangeSliderTrack>
-                <RangeSliderFilledTrack />
-              </RangeSliderTrack>
-              <RangeSliderThumb index={0} />
-              <RangeSliderThumb index={1} />
-              <RangeSliderMark
-                value={Number(yearSettings.yearSettingsStart.value)}
-                textAlign="center"
-                bg="blue.500"
-                color="white"
-                mt="-10"
-                ml="-5"
-                w="12"
+        <section className="flex flex-row justify-between py-3">
+          <div className="flex flex-row space-x-10">
+            <div className="flex flex-row items-center space-x-5">
+              {isAnimationPlaying ? (
+                <PauseCircleIcon
+                  onClick={() => {
+                    setIsAnimationPlaying(false);
+                  }}
+                  className="w-7 h-7 fill-gray-700 hover:cursor-pointer"
+                />
+              ) : (
+                <PlayCircleIcon
+                  onClick={() => {
+                    setIsAnimationPlaying(true);
+                  }}
+                  className="w-7 h-7 fill-gray-700 hover:cursor-pointer"
+                />
+              )}
+              <RangeSlider
+                defaultValue={[2006, 2021]}
+                min={2006}
+                max={2021}
+                step={1}
+                width={300}
+                onChange={onYearChange}
+                value={[
+                  yearSettings.yearSettingsStart.value,
+                  yearSettings.yearSettingsEnd.value,
+                ]}
               >
-                {yearSettings.yearSettingsStart.value}
-              </RangeSliderMark>
-              <RangeSliderMark
-                value={Number(yearSettings.yearSettingsEnd.value)}
-                textAlign="center"
-                bg="blue.500"
-                color="white"
-                mt="-10"
-                ml="-5"
-                w="12"
-              >
-                {yearSettings.yearSettingsEnd.value}
-              </RangeSliderMark>
-            </RangeSlider>
+                <RangeSliderTrack>
+                  <RangeSliderFilledTrack />
+                </RangeSliderTrack>
+                <RangeSliderThumb index={0} />
+                <RangeSliderThumb index={1} />
+                <RangeSliderMark
+                  value={yearSettings.yearSettingsStart.value}
+                  textAlign="center"
+                  bg="blue.500"
+                  color="white"
+                  mt="-10"
+                  ml="-5"
+                  w="12"
+                >
+                  {yearSettings.yearSettingsStart.value}
+                </RangeSliderMark>
+                <RangeSliderMark
+                  value={Number(yearSettings.yearSettingsEnd.value)}
+                  textAlign="center"
+                  bg="blue.500"
+                  color="white"
+                  mt="-10"
+                  ml="-5"
+                  w="12"
+                >
+                  {yearSettings.yearSettingsEnd.value}
+                </RangeSliderMark>
+              </RangeSlider>
+            </div>
             <Dropdown
               value={nocSettings.value}
               setValue={nocSettings.setValue}

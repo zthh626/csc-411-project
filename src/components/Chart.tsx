@@ -98,9 +98,9 @@ const Chart = ({
   chartSettings: ChartSettingsInterface;
 }) => {
   const { yearSettings, nocSettings } = useSettingsContext();
-  const margin = { top: 10, right: 0, bottom: 20, left: 30 };
+  const margin = { top: 10, right: 0, bottom: 20, left: 50 };
   const width = 500 - margin.left - margin.right;
-  const height = 300 - margin.top - margin.bottom;
+  const height = 250 - margin.top - margin.bottom;
 
   const data: Data[] = useMemo(() => {
     const newData: Data[] = [];
@@ -137,7 +137,7 @@ const Chart = ({
 
       newData.push({
         label: year,
-        value: val,
+        value: val * 1000,
       });
     }
 

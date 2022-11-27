@@ -62,17 +62,17 @@ export const SettingsContext = createContext<SettingsContextInterface>({
 export const SettingsProvider = ({ children }: PropsWithChildren<any>) => {
   const [nocValue, setNocValue] = useState(NocOptions[0]);
   const [mapYearValueStart, setMapYearValueStart] = useState(YearOptions[0]);
-  const [mapYearValueEnd, setMapYearValueEnd] = useState(YearOptions[15]);
+  const [mapYearValueEnd, setMapYearValueEnd] = useState(
+    YearOptions[YearOptions.length - 1]
+  );
 
   const [chart1ProvinceValue, setChart1ProvinceValue] = useState(
     ProvinceOptions[0]
   );
-  const [chart1NocValue, setChart1NocValue] = useState(NocOptions[0]);
 
   const [chart2ProvinceValue, setChart2ProvinceValue] = useState(
     ProvinceOptions[0]
   );
-  const [chart2NocValue, setChart2NocValue] = useState(NocOptions[0]);
 
   const provider: SettingsContextInterface = {
     nocSettings: {
