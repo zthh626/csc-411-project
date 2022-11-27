@@ -1,6 +1,8 @@
 import {
   axisBottom,
   axisLeft,
+  max,
+  min,
   ScaleBand,
   scaleBand,
   scaleLinear,
@@ -8,8 +10,18 @@ import {
   select,
 } from "d3";
 import * as React from "react";
-import { useEffect, useRef } from "react";
-import { YearOptions } from "../lib/Options";
+import { useEffect, useMemo, useRef } from "react";
+import {
+  ChartSettingsInterface,
+  NocSettingsInterface,
+  ProvinceSettingsInterface,
+  useSettingsContext,
+} from "../lib/SettingsContext";
+import jobData from "../data/jobdata.json";
+import Province from "./CanadaMap/Province";
+import { ProvinceCustomizations } from "./CanadaMap/Canada";
+import { ProvinceOptionType, YearOptions } from "../lib/Options";
+import { JobDataInterface } from "../data/jobdataInterface";
 
 interface Data {
   label: string;
@@ -70,40 +82,90 @@ function Bars({
         <rect
           key={`bar-${label}`}
           x={scaleX(label)}
-          y={scaleY(value)}
+          y={scaleY(Math.max(0, value))}
           width={scaleX.bandwidth()}
-          height={height - scaleY(value)}
-          fill="teal"
+          height={Math.abs(scaleY(value) - scaleY(0))}
+          fill={value > 0 ? "#2c7bb6" : "#d7191c"}
         />
       ))}
     </>
   );
 }
 
-const Chart: React.FunctionComponent = () => {
+const Chart = ({
+  chartSettings,
+}: {
+  chartSettings: ChartSettingsInterface;
+}) => {
+  const { yearSettings, nocSettings } = useSettingsContext();
   const margin = { top: 10, right: 0, bottom: 20, left: 30 };
   const width = 500 - margin.left - margin.right;
   const height = 300 - margin.top - margin.bottom;
 
-  const data: Data[] = [];
+  const data: Data[] = useMemo(() => {
+    const newData: Data[] = [];
+    const provinceData = (jobData as unknown as JobDataInterface)[
+      chartSettings.provinceSettings.value as ProvinceOptionType
+    ];
+    const filteredJobData = provinceData
+      .filter((data) => {
+        return data.occupation === nocSettings.value;
+      })
+      .sort((a, b) => {
+        return parseInt(a.year) - parseInt(b.year);
+      });
 
-  YearOptions.forEach((year) => {
-    data.push({
-      label: year,
-      value: Math.floor(Math.random() * 1000),
-    });
-  });
+    for (let i = 0; i < filteredJobData.length; i++) {
+      const year = filteredJobData[i].year;
+      let val = 0;
+
+      if (
+        !(
+          parseInt(year) >= yearSettings.yearSettingsStart.value &&
+          parseInt(year) <= yearSettings.yearSettingsEnd.value
+        )
+      )
+        continue;
+
+      // cannot compare to previous year since it doesn't exist
+      if (year !== YearOptions[0].toString()) {
+        const { value: currValue } = filteredJobData[i];
+        const { value: prevValue } = filteredJobData[i - 1];
+
+        val = parseFloat(currValue) - parseFloat(prevValue);
+      }
+
+      newData.push({
+        label: year,
+        value: val,
+      });
+    }
+
+    return newData;
+  }, [
+    yearSettings.yearSettingsStart,
+    yearSettings.yearSettingsEnd,
+    chartSettings.provinceSettings.value,
+    nocSettings.value,
+  ]);
 
   const scaleX = scaleBand()
     .domain(data.map(({ label }) => label))
     .range([0, width])
     .padding(0.5);
   const scaleY = scaleLinear()
-    .domain([0, Math.max(...data.map(({ value }) => value))])
+    .domain([
+      min(data, function (d) {
+        return d.value;
+      }) ?? 0,
+      max(data, function (d) {
+        return d.value;
+      }) ?? 0,
+    ])
     .range([height, 0]);
 
   return (
-    <div id="chart">
+    <div className="flex flex-row" id="chart">
       <svg
         width={width + margin.left + margin.right}
         height={height + margin.top + margin.bottom}

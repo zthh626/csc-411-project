@@ -68,6 +68,21 @@ export const ProvinceOptions: string[] = [
   "Yukon",
 ];
 
+export type ProvinceOptionType =
+  | "Alberta"
+  | "British Columbia"
+  | "Manitoba"
+  | "New Brunswick"
+  | "Newfoundland and Labrador"
+  | "Northwest Territories"
+  | "Nova Scotia"
+  | "Nunavut"
+  | "Ontario"
+  | "Prince Edward Island"
+  | "Quebec"
+  | "Saskatchewan"
+  | "Yukon";
+
 export const ProvinceAbbOptions: string[] = [
   "BC",
   "AB",
@@ -82,23 +97,9 @@ export const ProvinceAbbOptions: string[] = [
   "YT",
   "NT",
   "NU",
-]
+];
 
 export const YearOptions: number[] = [
-  2006,
-  2007,
-  2008,
-  2009,
-  2010,
-  2011,
-  2012,
-  2013,
-  2014,
-  2015,
-  2016,
-  2017,
-  2018,
-  2019,
-  2020,
-  2021,
+  2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018,
+  2019, 2020, 2021,
 ];

@@ -16,28 +16,38 @@ export interface YearSettingsInterface {
   setValue: (value: number) => void;
 }
 
+export interface ChartSettingsInterface {
+  provinceSettings: ProvinceSettingsInterface;
+}
+
 export interface SettingsContextInterface {
-  mapSettings: {
-    nocSettings: NocSettingsInterface;
+  nocSettings: NocSettingsInterface;
+  chart1Settings: ChartSettingsInterface;
+  chart2Settings: ChartSettingsInterface;
+  yearSettings: {
     yearSettingsStart: YearSettingsInterface;
     yearSettingsEnd: YearSettingsInterface;
-  };
-  chart1Settings: {
-    provinceSettings: ProvinceSettingsInterface;
-    nocSettings: NocSettingsInterface;
-  };
-  chart2Settings: {
-    provinceSettings: ProvinceSettingsInterface;
-    nocSettings: NocSettingsInterface;
   };
 }
 
 export const SettingsContext = createContext<SettingsContextInterface>({
-  mapSettings: {
-    nocSettings: {
+  nocSettings: {
+    value: "",
+    setValue: (_value: string) => {},
+  },
+  chart1Settings: {
+    provinceSettings: {
       value: "",
       setValue: (_value: string) => {},
     },
+  },
+  chart2Settings: {
+    provinceSettings: {
+      value: "",
+      setValue: (_value: string) => {},
+    },
+  },
+  yearSettings: {
     yearSettingsStart: {
       value: 2006,
       setValue: (_value: number) => {},
@@ -47,30 +57,10 @@ export const SettingsContext = createContext<SettingsContextInterface>({
       setValue: (_value: number) => {},
     },
   },
-  chart1Settings: {
-    provinceSettings: {
-      value: "",
-      setValue: (_value: string) => {},
-    },
-    nocSettings: {
-      value: "",
-      setValue: (_value: string) => {},
-    },
-  },
-  chart2Settings: {
-    provinceSettings: {
-      value: "",
-      setValue: (_value: string) => {},
-    },
-    nocSettings: {
-      value: "",
-      setValue: (_value: string) => {},
-    },
-  },
 });
 
 export const SettingsProvider = ({ children }: PropsWithChildren<any>) => {
-  const [mapNocValue, setMapNocValue] = useState(NocOptions[0]);
+  const [nocValue, setNocValue] = useState(NocOptions[0]);
   const [mapYearValueStart, setMapYearValueStart] = useState(YearOptions[0]);
   const [mapYearValueEnd, setMapYearValueEnd] = useState(YearOptions[15]);
 
@@ -85,24 +75,10 @@ export const SettingsProvider = ({ children }: PropsWithChildren<any>) => {
   const [chart2NocValue, setChart2NocValue] = useState(NocOptions[0]);
 
   const provider: SettingsContextInterface = {
-    mapSettings: {
-      nocSettings: {
-        value: mapNocValue,
-        setValue: (value: string) => {
-          setMapNocValue(value);
-        },
-      },
-      yearSettingsStart: {
-        value: mapYearValueStart,
-        setValue: (value: number) => {
-          setMapYearValueStart(value);
-        },
-      },
-      yearSettingsEnd: {
-        value: mapYearValueEnd,
-        setValue: (value: number) => {
-          setMapYearValueEnd(value);
-        },
+    nocSettings: {
+      value: nocValue,
+      setValue: (value: string) => {
+        setNocValue(value);
       },
     },
     chart1Settings: {
@@ -110,12 +86,6 @@ export const SettingsProvider = ({ children }: PropsWithChildren<any>) => {
         value: chart1ProvinceValue,
         setValue: (value: string) => {
           setChart1ProvinceValue(value);
-        },
-      },
-      nocSettings: {
-        value: chart1NocValue,
-        setValue: (value: string) => {
-          setChart1NocValue(value);
         },
       },
     },
@@ -126,10 +96,18 @@ export const SettingsProvider = ({ children }: PropsWithChildren<any>) => {
           setChart2ProvinceValue(value);
         },
       },
-      nocSettings: {
-        value: chart2NocValue,
-        setValue: (value: string) => {
-          setChart2NocValue(value);
+    },
+    yearSettings: {
+      yearSettingsStart: {
+        value: mapYearValueStart,
+        setValue: (value: number) => {
+          setMapYearValueStart(value);
+        },
+      },
+      yearSettingsEnd: {
+        value: mapYearValueEnd,
+        setValue: (value: number) => {
+          setMapYearValueEnd(value);
         },
       },
     },

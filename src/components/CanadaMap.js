@@ -1,19 +1,8 @@
-import Canada from "../components/CanadaMap/Canada";
-import data from "../components/CanadaMap/data/jobdata.json";
+import { Tag } from "@chakra-ui/react";
 import { useMemo } from "react";
-import {
-  NocOptions,
-  ProvinceOptions,
-  YearOptions,
-  ProvinceAbbOptions,
-} from "../lib/Options";
-import {
-  Tag,
-  TagLabel,
-  TagLeftIcon,
-  TagRightIcon,
-  TagCloseButton,
-} from "@chakra-ui/react";
+import Canada from "../components/CanadaMap/Canada";
+import data from "../data/jobdata.json";
+import { ProvinceOptions } from "../lib/Options";
 
 const colorscale = ["#d7191c", "#fdae61", "#ffffbf", "#abd9e9", "#2c7bb6"];
 
@@ -83,7 +72,7 @@ const CanadaMap = (props) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <Canada
         fillColor={fillColor}
         onHoverColor={onHoverColor}
@@ -92,7 +81,7 @@ const CanadaMap = (props) => {
         customize={calculateData}
         onClick={mapClickHandler}
       />
-      <div>
+      <div className="-ml-20 space-x-3">
         <Tag bg={colorscale[0]}>{"-20%"}</Tag>
         <Tag bg={colorscale[1]}>{"-10%"}</Tag>
         <Tag bg={colorscale[2]}>{"0%"}</Tag>
