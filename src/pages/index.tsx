@@ -86,7 +86,7 @@ export default function Map() {
                   yearSettings.yearSettingsEnd.value,
                 ]}
               >
-                <RangeSliderTrack>
+                <RangeSliderTrack bg="white">
                   <RangeSliderFilledTrack />
                 </RangeSliderTrack>
                 <RangeSliderThumb index={0} />
